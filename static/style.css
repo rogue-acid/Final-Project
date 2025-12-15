@@ -1,0 +1,27 @@
+body {
+	background-color: AntiqueWhite;
+}
+
+.post_text {
+	border: solid;
+	padding: 1em;
+	margin-top: 1em;
+	background-color: Azure;
+}
+
+.span_text {
+	border-left: solid;
+	border-width: 0.2em;
+	padding-left: 0.5em;
+	margin-left: 0.5em;
+	padding-bottom: 1.2em;
+	padding-top: 1.2em;
+}
+
+.navbar_color {
+	background-color: DarkGrey;
+}
+
+#content {
+     margin-left: 20px;
+}

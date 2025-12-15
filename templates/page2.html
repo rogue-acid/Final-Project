@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}page2{% endblock %}
+
+{% block content %}
+
+
+{% if logged_in %}
+
+	
+	<h2>Make a Post</h1>
+
+    <form action='/submitPost'>
+      <label for="sentence">Type a something you want to post.</label>
+      <br>
+      <input type="text" name="sentence" id="sentence" required>
+      <br><br>
+      <input type="submit">
+    </form>
+
+{% else %}
+{% endif %}
+
+<h2>Posts by users</h1>
+
+{% for post in posts %}
+	
+	<p class="post_text">
+	
+	<span> {{ post.user }}, {{current_date}} </span>
+	<span class="span_text"> {{ post.post }} </span>
+	</p>
+{% endfor %}
+
+{% endblock %}
