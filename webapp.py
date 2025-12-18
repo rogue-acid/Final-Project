@@ -103,9 +103,10 @@ def renderPage2():
 @app.route("/submitPost")
 def render_sumbitPost():
     sentence = request.args['sentence']
+    img_file = request.args['img_import']
     
     
-    doc = {"user":session['user_data']['login'], "post":sentence}
+    doc = {"user":session['user_data']['login'], "post":sentence, "img":img_file}
     collection.insert_one(doc)
     
   

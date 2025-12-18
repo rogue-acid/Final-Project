@@ -11,12 +11,18 @@
 	<h2>Make a Post</h1>
 
     <form action='/submitPost'>
+		<div class="mb-3">
+			<label for="formFile" class="form-label">Upload your drawing here</label>
+			<input class="form-control"  name="img_import" type="file" id="formFile">
+		</div>
       <label for="sentence">Type a something you want to post.</label>
       <br>
       <input type="text" name="sentence" id="sentence" required>
       <br><br>
       <input type="submit">
     </form>
+	
+	
 
 {% else %}
 {% endif %}
