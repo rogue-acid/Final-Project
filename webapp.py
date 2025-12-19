@@ -92,6 +92,10 @@ def authorized():
 
 
 
+
+
+
+
 @app.route('/page2')
 def renderPage2():
     posts = collection.find()
@@ -100,16 +104,31 @@ def renderPage2():
     return render_template('page2.html', posts=posts, current_date=current_date)
     
 
-@app.route("/submitPost")
+@app.route("/submitPost", methods=['POST', 'GET'])
 def render_sumbitPost():
-    sentence = request.args['sentence']
-    
-    
-    doc = {"user":session['user_data']['login'], "post":sentence}
-    collection.insert_one(doc)
+
+   
+    if request.method == 'POST': 
+        sentence = request.form['sentence']
+        doc = {"user":session['user_data']['login'], "post":sentence}
+        collection.insert_one(doc)
     
   
-    return render_template('message.html', message='Post submited')
+        return render_template('message.html', message='Post submited')
+    else: 
+           
+    # the code below is executed if the request method was GET or the 
+    #credentials were invalid 
+        return render_template('page2.html')
+
+    
+    
+    
+    # doc = {"user":session['user_data']['login'], "post":sentence}
+    # collection.insert_one(doc)
+    
+  
+    # return render_template('message.html', message='Post submited')
     
 
 #the tokengetter is automatically called to check who is logged in.
