@@ -103,6 +103,11 @@ def renderPage2():
 
     return render_template('page2.html', posts=posts, current_date=current_date)
     
+@app.route('/favorite')
+def renderFavorite():
+
+    return render_template('favorite.html')
+    
 
 @app.route("/submitPost", methods=['POST', 'GET'])
 def render_sumbitPost():
