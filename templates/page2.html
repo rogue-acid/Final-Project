@@ -30,7 +30,12 @@
 	<span> {{ post.user }}, {{current_date}} </span>
 	<span class="span_text"> {{ post.post }} </span>
 	</p>
-	<button type="button" onclick="alert('Favorited post')">Favorite</button>
+	
+	<form action="/favorite" method="post"> 
+
+	<button type="button" value="{{post._id}}">Favorite</button>
+	
+	</form>
 {% endfor %}
 
 {% endblock %}

@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
 #from flask_oauthlib.contrib.apps import github #import to make requests to GitHub's OAuth
 from flask import render_template
+from bson.objectid import ObjectId
 
 import pprint
 import os
@@ -92,10 +93,6 @@ def authorized():
 
 
 
-
-
-
-
 @app.route('/page2')
 def renderPage2():
     posts = collection.find()
@@ -103,11 +100,15 @@ def renderPage2():
 
     return render_template('page2.html', posts=posts, current_date=current_date)
     
-@app.route('/favorite')
-def renderFavorite():
+@app.route('/favorites')
+def renderFavorites():
 
     return render_template('favorite.html')
     
+@app.route('/favorite',  methods=['POST'])
+def saveFavorite():
+    print(request.form) 
+    return "1"
 
 @app.route("/submitPost", methods=['POST', 'GET'])
 def render_sumbitPost():
