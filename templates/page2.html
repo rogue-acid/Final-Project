@@ -10,12 +10,18 @@
 	
 	<h2>Make a Post</h1>
 
-    <form action='/submitPost' method="post">
+    <form action='/submitPost' method="post" enctype="multipart/form-data">
+	  <div class="mb-3">
+	  	<label for="formFile" class="form-label">Default file input example</label>
+	  	<input class="form-control" type="file" name="img_file" id="formFile" required>
+	  </div>
       <label for="sentence">Type a something you want to post.</label>
       <br>
       <input type="text" name="sentence" id="sentence" required>
       <br><br>
-      <input type="submit">
+        <div>
+    <button>Submit</button>
+  </div>
     </form>
 
 {% else %}
@@ -23,13 +29,12 @@
 
 <h2>Posts by users</h1>
 
-{% for post in posts %}
-	
+{% for post in posts %}		
 	<p class="post_text">
-	
-	<span> {{ post.user }}, {{current_date}} </span>
-	<span class="span_text"> {{ post.post }} </span>
+		<span> {{ post.user }}, {{current_date}} </span>
+		<span class="span_text"> {{ post.post }} </span>	
 	</p>
+		<img class="post_image" src="/image/{{ post.img_id }}">
 {% endfor %}
 
 {% endblock %}
