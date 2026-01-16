@@ -34,7 +34,17 @@
 		<span> {{ post.user }}, {{current_date}} </span>
 		<span class="span_text"> {{ post.post }} </span>	
 	</p>
-		<img class="post_image" src="/image/{{ post.img_id }}">
+
+	
+                    
+   <img class="post_image" src="/image/{{ post.img_id }}">
+
+	<form action="/favorite" method="post"> 
+
+	<button type="button" value="{{post._id}}">Favorite</button>
+	
+	</form>
+
 {% endfor %}
 
 {% endblock %}
