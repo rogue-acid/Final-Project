@@ -4,8 +4,16 @@ body {
 
 .post_text {
 	border: solid;
-	padding: 1em;
-	margin-top: 1em;
+	background-color: Azure;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-bottom: 0;
+}
+
+.post_image {
+	border-right: solid;
+	border-left: solid;
+	border-bottom: solid;
 	background-color: Azure;
 }
 

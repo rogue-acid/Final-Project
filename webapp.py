@@ -1,12 +1,18 @@
-from flask import Flask, redirect, url_for, session, request, jsonify
+from flask import Flask, Response, redirect, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
 #from flask_oauthlib.contrib.apps import github #import to make requests to GitHub's OAuth
 from flask import render_template
+
 from bson.objectid import ObjectId
+
+import werkzeug
+
 
 import pprint
 import os
+from bson import ObjectId
 import pymongo
+import gridfs
 import sys
 from datetime import date
 
@@ -43,6 +49,7 @@ db_name = os.environ["MONGO_DBNAME"]
 
 client = pymongo.MongoClient(connection_string)
 db = client[db_name]
+fs = gridfs.GridFS(db)
 collection = db['Posts'] #1. put the name of your collection in the quotes
 
 # Send a ping to confirm a successful connection
@@ -59,6 +66,13 @@ except Exception as e:
 def inject_logged_in():
     is_logged_in = 'github_token' in session #this will be true if the token is in the session and false otherwise
     return {"logged_in":is_logged_in}
+    
+
+def upload_file(file):
+    filename = werkzeug.utils.secure_filename(file.filename)
+    file_id = fs.put(file.stream, file_path=filename)
+    print(f"File uploaded successfully with ID: {file_id}")
+    return file_id
 
 @app.route('/')
 def home():
@@ -116,7 +130,10 @@ def render_sumbitPost():
    
     if request.method == 'POST': 
         sentence = request.form['sentence']
-        doc = {"user":session['user_data']['login'], "post":sentence}
+        img_file = request.files['img_file']
+        
+        img_id = upload_file(img_file)
+        doc = {"user":session['user_data']['login'], "post" :sentence, "img_id": img_id}
         collection.insert_one(doc)
     
   
@@ -126,16 +143,14 @@ def render_sumbitPost():
     # the code below is executed if the request method was GET or the 
     #credentials were invalid 
         return render_template('page2.html')
-
+        
+@app.route("/image/<file_id>")
+def render_image(file_id):
+    file_data = fs.find_one({'_id': ObjectId(file_id)})
+    if not file_data:
+        return redirect('/page2')
     
-    
-    
-    # doc = {"user":session['user_data']['login'], "post":sentence}
-    # collection.insert_one(doc)
-    
-  
-    # return render_template('message.html', message='Post submited')
-    
+    return Response(file_data.read(), mimetype="image/png")
 
 #the tokengetter is automatically called to check who is logged in.
 @github.tokengetter
